@@ -10,7 +10,7 @@ public class Interpreter {
 		Lexer lexer = new Lexer(script);
 		Token token = lexer.process();
 		Parser parser = new Parser(token);
-		return parser.parse(token);
+		return parser.parse();
 	}
 
 
