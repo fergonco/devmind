@@ -3,6 +3,7 @@ package org.fergonco.devmind;
 import org.fergonco.devmind.interpreter.ConstantStatement;
 import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.Interpreter;
+import org.fergonco.devmind.interpreter.PredicateStatement;
 import org.fergonco.devmind.interpreter.Statement;
 import org.fergonco.devmind.lexer.LexerException;
 import org.fergonco.devmind.parser.Constant;
@@ -18,25 +19,32 @@ public class ParserTest extends TestCase {
 
 	@Test
 	public void testConstant() throws SyntaxException, LexerException {
-		Interpreter compiler = new Interpreter();
-		Statement[] statements = compiler.compile("Project");
+		Interpreter interpreter = new Interpreter();
+		Statement[] statements = interpreter.compile("Project");
 		assertTrue(statements.length == 1);
 		checkEquals(statements[0], new ConstantStatement("Project"));
+	}
+	@Test
+	public void testPredicate() throws SyntaxException, LexerException {
+		Interpreter interpreter = new Interpreter();
+		Statement[] statements = interpreter.compile("nice(Project)");
+		assertTrue(statements.length == 1);
+		checkEquals(statements[0], new PredicateStatement("nice", new Constant("Project")));
 	}
 
 	@Test
 	public void testVariable() throws SyntaxException, LexerException {
-		Interpreter compiler = new Interpreter();
-		Statement[] statements = compiler.compile("P = Project");
+		Interpreter interpreter = new Interpreter();
+		Statement[] statements = interpreter.compile("P = Project");
 		assertTrue(statements.length == 1);
 		checkEquals(statements[0], new EqualityStatement(new Constant("P"), new Constant("Project")));
 	}
 
 	@Test
 	public void testFunction() throws SyntaxException, LexerException {
-		Interpreter compiler = new Interpreter();
+		Interpreter interpreter = new Interpreter();
 		String text = "We dont know yet";
-		Statement[] statements = compiler.compile("aim(P) = \"" + text + "\"");
+		Statement[] statements = interpreter.compile("aim(P) = \"" + text + "\"");
 		assertTrue(statements.length == 1);
 		checkEquals(statements[0],
 				new EqualityStatement(new Function("aim", new Expression[] { new Constant("P") }), new Literal(text)));

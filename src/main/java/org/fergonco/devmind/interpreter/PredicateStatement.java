@@ -8,7 +8,7 @@ public class PredicateStatement implements Statement {
 	private String predicateName;
 	private Expression[] parameters;
 
-	public PredicateStatement(String predicateName, Expression[] parameters) {
+	public PredicateStatement(String predicateName, Expression... parameters) {
 		this.predicateName = predicateName;
 		this.parameters = parameters;
 	}

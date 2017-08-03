@@ -4,11 +4,6 @@ import java.util.ArrayList;
 
 public class Lexer {
 
-	public static final Token EQUALS = new EqualsToken();
-	public static final Token CLOSED_PARENTHESIS = new ClosedParenthesisToken();
-	public static final Token COMA = new ComaToken();
-	public static final Token IMPLICATION = new ImplicationToken();
-	public static final Token OPEN_PARENTHESIS = new OpenParenthesisToken();
 	private String script;
 	private int position;
 	private ArrayList<Token> ret = new ArrayList<>();
@@ -39,16 +34,16 @@ public class Lexer {
 				int end = position;
 				ret.add(new SingleValueToken(script.substring(start, end)));
 			} else if (character == '(') {
-				ret.add(OPEN_PARENTHESIS);
+				ret.add(new OpenParenthesisToken());
 			} else if (character == ')') {
-				ret.add(CLOSED_PARENTHESIS);
+				ret.add(new ClosedParenthesisToken());
 			} else if (character == '=') {
-				ret.add(EQUALS);
+				ret.add(new EqualsToken());
 			} else if (character == ',') {
-				ret.add(COMA);
+				ret.add(new ComaToken());
 			} else if (character == '-') {
 				if (position + 1 < chars.length && chars[position + 1] == '>') {
-					ret.add(IMPLICATION);
+					ret.add(new ImplicationToken());
 					position++;// move to last position of token
 				} else {
 					throw new LexerException("- must be followed by >");

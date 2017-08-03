@@ -7,8 +7,12 @@ import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.ImplicationStatement;
 import org.fergonco.devmind.interpreter.PredicateStatement;
 import org.fergonco.devmind.interpreter.Statement;
+import org.fergonco.devmind.lexer.ClosedParenthesisToken;
+import org.fergonco.devmind.lexer.ComaToken;
+import org.fergonco.devmind.lexer.EqualsToken;
 import org.fergonco.devmind.lexer.IDToken;
-import org.fergonco.devmind.lexer.Lexer;
+import org.fergonco.devmind.lexer.ImplicationToken;
+import org.fergonco.devmind.lexer.OpenParenthesisToken;
 import org.fergonco.devmind.lexer.SingleValueToken;
 import org.fergonco.devmind.lexer.Token;
 
@@ -24,10 +28,10 @@ public class Parser {
 	public Statement[] parse() throws SyntaxException {
 		ArrayList<Statement> statements = new ArrayList<>();
 		Expression leftSide = expression();
-		if (accept(Lexer.EQUALS.getClass())) {
+		if (accept(EqualsToken.class)) {
 			Expression rightSide = expression();
 			statements.add(new EqualityStatement(leftSide, rightSide));
-		} else if (accept(Lexer.IMPLICATION.getClass())) {
+		} else if (accept(ImplicationToken.class)) {
 			Expression rightSide = expression();
 			statements.add(new ImplicationStatement(leftSide, rightSide));
 		} else {
@@ -47,17 +51,17 @@ public class Parser {
 			return new Literal(lastConsumed.getText());
 		} else {
 			String id = expect(IDToken.class).getText();
-			if (accept(Lexer.OPEN_PARENTHESIS.getClass())) {
+			if (accept(OpenParenthesisToken.class)) {
 				ArrayList<Expression> terms = new ArrayList<>();
 				do {
 					terms.add(expression());
 					try {
-						expect(Lexer.COMA.getClass());
+						expect(ComaToken.class);
 					} catch (SyntaxException e) {
 						break;
 					}
 				} while (true);
-				expect(Lexer.CLOSED_PARENTHESIS.getClass());
+				expect(ClosedParenthesisToken.class);
 				Expression[] termArray = terms.toArray(new Expression[terms.size()]);
 				return new Function(id, termArray);
 			} else {
