@@ -7,7 +7,7 @@ public class Function implements Expression {
 	private String id;
 	private Expression[] parameters;
 
-	public Function(String id, Expression[] parameters) {
+	public Function(String id, Expression... parameters) {
 		this.id = id;
 		this.parameters = parameters;
 	}

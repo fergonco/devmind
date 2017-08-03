@@ -19,38 +19,34 @@ public class ParserTest extends TestCase {
 
 	@Test
 	public void testConstant() throws SyntaxException, LexerException {
-		Interpreter interpreter = new Interpreter();
-		Statement[] statements = interpreter.compile("Project");
-		assertTrue(statements.length == 1);
-		checkEquals(statements[0], new ConstantStatement("Project"));
+		check("Project", new ConstantStatement("Project"));
 	}
+
+	private void check(String script, Statement statement) throws SyntaxException, LexerException {
+		Interpreter interpreter = new Interpreter();
+		Statement[] statements = interpreter.compile(script);
+		assertTrue(statements.length == 1);
+		Statement statement1 = statements[0];
+		assertTrue(statement1 + " vs " + statement, statement1.toString().equals(statement.toString()));
+	}
+
 	@Test
 	public void testPredicate() throws SyntaxException, LexerException {
-		Interpreter interpreter = new Interpreter();
-		Statement[] statements = interpreter.compile("nice(Project)");
-		assertTrue(statements.length == 1);
-		checkEquals(statements[0], new PredicateStatement("nice", new Constant("Project")));
+		check("nice(Project)", new PredicateStatement("nice", new Constant("Project")));
 	}
 
 	@Test
-	public void testVariable() throws SyntaxException, LexerException {
-		Interpreter interpreter = new Interpreter();
-		Statement[] statements = interpreter.compile("P = Project");
-		assertTrue(statements.length == 1);
-		checkEquals(statements[0], new EqualityStatement(new Constant("P"), new Constant("Project")));
+	public void testPredicateParameters() throws SyntaxException, LexerException {
+		check("nice(ui(Project))", new PredicateStatement("nice", new Function("ui", new Constant("Project"))));
+		check("nice(\"holidays\")", new PredicateStatement("nice", new Literal("holidays")));
 	}
 
 	@Test
-	public void testFunction() throws SyntaxException, LexerException {
-		Interpreter interpreter = new Interpreter();
-		String text = "We dont know yet";
-		Statement[] statements = interpreter.compile("aim(P) = \"" + text + "\"");
-		assertTrue(statements.length == 1);
-		checkEquals(statements[0],
-				new EqualityStatement(new Function("aim", new Expression[] { new Constant("P") }), new Literal(text)));
-	}
-
-	private void checkEquals(Statement statement, Statement variableStatement) {
-		assertTrue(statement + " vs " + variableStatement, statement.toString().equals(variableStatement.toString()));
+	public void testEquality() throws SyntaxException, LexerException {
+		check("P = Project", new EqualityStatement(new Constant("P"), new Constant("Project")));
+		check("P = ui(Project, \"mobile\")", new EqualityStatement(new Constant("P"),
+				new Function("ui", new Constant("Project"), new Literal("mobile"))));
+		check("aim(P) = \"We dont know yet\"", new EqualityStatement(
+				new Function("aim", new Expression[] { new Constant("P") }), new Literal("We dont know yet")));
 	}
 }
