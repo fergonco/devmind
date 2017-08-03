@@ -24,4 +24,20 @@ public class Function implements Expression {
 	public String toString() {
 		return id + "(" + StringUtils.join(parameters) + ")";
 	}
+
+	public boolean same(Expression obj) {
+		if (obj instanceof Function) {
+			Function that = (Function) obj;
+			if (this.id.equals(that.id) && this.parameters.length == that.parameters.length) {
+				for (int i = 0; i < parameters.length; i++) {
+					if (!this.parameters[i].equals(that.parameters[i])) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

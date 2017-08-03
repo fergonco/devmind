@@ -1,16 +1,9 @@
 package org.fergonco.devmind.parser;
 
-public class Constant implements Expression {
-
-	private String value;
+public class Constant extends StringBasedExpression implements Expression {
 
 	public Constant(String value) {
-		this.value = value;
-	}
-
-	@Override
-	public String toString() {
-		return value;
+		super(value);
 	}
 
 	public String getId() {
