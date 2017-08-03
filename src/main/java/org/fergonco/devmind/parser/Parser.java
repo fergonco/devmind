@@ -7,6 +7,7 @@ import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.ImplicationStatement;
 import org.fergonco.devmind.interpreter.PredicateStatement;
 import org.fergonco.devmind.interpreter.Statement;
+import org.fergonco.devmind.interpreter.WhatStatement;
 import org.fergonco.devmind.lexer.ClosedParenthesisToken;
 import org.fergonco.devmind.lexer.ComaToken;
 import org.fergonco.devmind.lexer.EqualsToken;
@@ -15,6 +16,7 @@ import org.fergonco.devmind.lexer.ImplicationToken;
 import org.fergonco.devmind.lexer.OpenParenthesisToken;
 import org.fergonco.devmind.lexer.SingleValueToken;
 import org.fergonco.devmind.lexer.Token;
+import org.fergonco.devmind.lexer.WhatToken;
 
 public class Parser {
 
@@ -26,24 +28,29 @@ public class Parser {
 	}
 
 	public Statement parse() throws SyntaxException {
-		Expression leftSide = expression();
 		Statement ret = null;
-		if (accept(EqualsToken.class)) {
-			Expression rightSide = expression();
-			ret = new EqualityStatement(leftSide, rightSide);
-		} else if (accept(ImplicationToken.class)) {
-			Expression rightSide = expression();
-			ret = new ImplicationStatement(leftSide, rightSide);
+		if (accept(WhatToken.class)) {
+			ret = new WhatStatement();
 		} else {
-			if (leftSide instanceof Constant) {
-				ret = new ConstantStatement(((Constant) leftSide).getId());
-			} else if (leftSide instanceof Function) {
-				Function predicateCall = (Function) leftSide;
-				ret = new PredicateStatement(predicateCall);
+			Expression leftSide = expression();
+			if (accept(EqualsToken.class)) {
+				Expression rightSide = expression();
+				ret = new EqualityStatement(leftSide, rightSide);
+			} else if (accept(ImplicationToken.class)) {
+				Expression rightSide = expression();
+				ret = new ImplicationStatement(leftSide, rightSide);
+			} else {
+				if (leftSide instanceof Constant) {
+					ret = new ConstantStatement(((Constant) leftSide).getId());
+				} else if (leftSide instanceof Function) {
+					Function predicateCall = (Function) leftSide;
+					ret = new PredicateStatement(predicateCall);
+				}
 			}
 		}
 
 		return ret;
+
 	}
 
 	public Expression expression() throws SyntaxException {

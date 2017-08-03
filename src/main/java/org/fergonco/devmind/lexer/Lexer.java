@@ -17,7 +17,10 @@ public class Lexer {
 		char[] chars = script.toCharArray();
 		while (position < chars.length) {
 			char character = chars[position];
-			if (Character.isLetter(character)) {
+			if (matches(chars, position, "what")) {
+				position += 4;
+				ret.add(new WhatToken());
+			} else if (Character.isLetter(character)) {
 				int start = position;
 				while (position < chars.length && Character.isLetterOrDigit(chars[position])) {
 					position++;
@@ -57,6 +60,18 @@ public class Lexer {
 		}
 		linkTokens();
 		return ret.get(0);
+	}
+
+	private boolean matches(char[] chars, int pos, String str) {
+		if (chars.length < pos + str.length()) {
+			return false;
+		}
+		for (int i = 0; i < str.length(); i++) {
+			if (chars[pos + i] != str.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void linkTokens() {

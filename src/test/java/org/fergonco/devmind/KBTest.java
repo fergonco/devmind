@@ -11,7 +11,6 @@ import org.fergonco.devmind.lexer.LexerException;
 import org.fergonco.devmind.parser.Constant;
 import org.fergonco.devmind.parser.Function;
 import org.fergonco.devmind.parser.SyntaxException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class KBTest {
@@ -50,14 +49,11 @@ public class KBTest {
 	}
 
 	@Test
-	@Ignore
-	public void runAskStatement() throws SyntaxException, LexerException {
+	public void runAskWhat() throws SyntaxException, LexerException {
 		Interpreter i = new Interpreter();
 		i.run("A");
-		// int[] keys = i.run("what");
-		// assertTrue(keys.length == 1);
-		// assertTrue(i.getItem(keys[0]).same(new Constant("A")));
-
+		String output = i.run("what");
+		assertTrue(output.contains("A"));
 	}
 
 	private boolean contains(Object[] array, Object element) {

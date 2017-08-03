@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.fergonco.devmind.parser.Expression;
 import org.fergonco.devmind.parser.Function;
 
-public class PredicateStatement implements Statement {
+public class PredicateStatement extends AbstractTellStatement implements Statement {
 
 	private Function predicateCall;
 
@@ -23,4 +23,5 @@ public class PredicateStatement implements Statement {
 			kb.registerReferences(this, parameter);
 		}
 	}
+
 }

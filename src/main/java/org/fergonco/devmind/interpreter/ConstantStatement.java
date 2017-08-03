@@ -1,6 +1,6 @@
 package org.fergonco.devmind.interpreter;
 
-public class ConstantStatement implements Statement {
+public class ConstantStatement extends AbstractTellStatement implements Statement {
 
 	private String constantValue;
 
@@ -10,7 +10,7 @@ public class ConstantStatement implements Statement {
 
 	@Override
 	public String toString() {
-		return constantValue; 
+		return constantValue;
 	}
 
 	@Override

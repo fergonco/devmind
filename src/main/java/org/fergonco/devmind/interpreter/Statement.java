@@ -4,4 +4,6 @@ public interface Statement {
 
 	void execute(KnowledgeBase kb);
 
+	String getOutput();
+
 }

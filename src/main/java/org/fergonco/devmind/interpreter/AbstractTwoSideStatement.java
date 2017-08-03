@@ -2,7 +2,7 @@ package org.fergonco.devmind.interpreter;
 
 import org.fergonco.devmind.parser.Expression;
 
-public class AbstractTwoSideStatement implements Statement {
+public class AbstractTwoSideStatement extends AbstractTellStatement implements Statement {
 
 	protected Expression leftSide;
 	protected Expression rightSide;
@@ -17,4 +17,5 @@ public class AbstractTwoSideStatement implements Statement {
 		kb.registerReferences(this, leftSide);
 		kb.registerReferences(this, rightSide);
 	}
+
 }

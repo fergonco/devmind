@@ -17,9 +17,10 @@ public class Interpreter {
 		return parser.parse();
 	}
 
-	public void run(String script) throws SyntaxException, LexerException {
+	public String run(String script) throws SyntaxException, LexerException {
 		Statement statement = compile(script);
 		statement.execute(kb);
+		return statement.getOutput();
 	}
 
 	public String[] getConstants() {
