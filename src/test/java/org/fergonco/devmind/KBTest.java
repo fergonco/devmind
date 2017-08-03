@@ -18,10 +18,10 @@ public class KBTest {
 	@Test
 	public void AskConstants() throws SyntaxException, LexerException {
 		Interpreter i = new Interpreter();
-		i.tell("P");
-		i.tell("A");
-		i.tell("cool(A)");
-		String[] constants = i.askConstants();
+		i.run("P");
+		i.run("A");
+		i.run("cool(A)");
+		String[] constants = i.getConstants();
 		assertEquals(2, constants.length);
 		assertTrue(contains(constants, "P"));
 		assertTrue(contains(constants, "A"));
@@ -30,14 +30,14 @@ public class KBTest {
 	@Test
 	public void AskReferencesOfConstant() throws SyntaxException, LexerException {
 		Interpreter i = new Interpreter();
-		i.tell("P");
-		i.tell("A");
-		i.tell("cool(A)");
-		i.tell("nice(B)");
-		i.tell("parent(C) = A");
-		i.tell("parent(C, A)");
-		i.tell("parts(B) = parts(A)");
-		Statement[] statements = i.askReferences("A");
+		i.run("P");
+		i.run("A");
+		i.run("cool(A)");
+		i.run("nice(B)");
+		i.run("parent(C) = A");
+		i.run("parent(C, A)");
+		i.run("parts(B) = parts(A)");
+		Statement[] statements = i.getReferences("A");
 		assertEquals(4, statements.length);
 		assertTrue(contains(statements, new PredicateStatement(new Function("cool", new Constant("A")))));
 		assertTrue(contains(statements, new PredicateStatement(new Function("parent", new Constant("C"), new Constant("A")))));

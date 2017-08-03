@@ -41,11 +41,11 @@ public class KnowledgeBase {
 		}
 	}
 
-	public String[] askConstants() {
+	public String[] getConstants() {
 		return constants.toArray(new String[constants.size()]);
 	}
 
-	public Statement[] askReferences(String constantName) {
+	public Statement[] getReferences(String constantName) {
 		ArrayList<Statement> ret = constantStatements.get(constantName);
 		return ret.toArray(new Statement[ret.size()]);
 	}

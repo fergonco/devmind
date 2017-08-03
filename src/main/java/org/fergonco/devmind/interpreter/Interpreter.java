@@ -17,18 +17,18 @@ public class Interpreter {
 		return parser.parse();
 	}
 
-	public void tell(String script) throws SyntaxException, LexerException {
+	public void run(String script) throws SyntaxException, LexerException {
 		Statement[] statements = compile(script);
 		for (Statement statement : statements) {
 			statement.execute(kb);
 		}
 	}
 
-	public String[] askConstants() {
-		return kb.askConstants();
+	public String[] getConstants() {
+		return kb.getConstants();
 	}
 
-	public Statement[] askReferences(String constantName) {
-		return kb.askReferences(constantName);
+	public Statement[] getReferences(String constantName) {
+		return kb.getReferences(constantName);
 	}
 }
