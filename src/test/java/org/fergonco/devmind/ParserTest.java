@@ -24,10 +24,8 @@ public class ParserTest extends TestCase {
 
 	private void check(String script, Statement statement) throws SyntaxException, LexerException {
 		Interpreter interpreter = new Interpreter();
-		Statement[] statements = interpreter.compile(script);
-		assertTrue(statements.length == 1);
-		Statement statement1 = statements[0];
-		assertTrue(statement1 + " vs " + statement, statement1.toString().equals(statement.toString()));
+		Statement result = interpreter.compile(script);
+		assertTrue(result + " vs " + statement, result.toString().equals(statement.toString()));
 	}
 
 	@Test

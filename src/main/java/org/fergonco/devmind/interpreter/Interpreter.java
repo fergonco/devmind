@@ -10,18 +10,16 @@ public class Interpreter {
 
 	private KnowledgeBase kb = new KnowledgeBase();
 
-	public Statement[] compile(String script) throws SyntaxException, LexerException {
-		Lexer lexer = new Lexer(script);
+	public Statement compile(String query) throws SyntaxException, LexerException {
+		Lexer lexer = new Lexer(query);
 		Token token = lexer.process();
 		Parser parser = new Parser(token);
 		return parser.parse();
 	}
 
 	public void run(String script) throws SyntaxException, LexerException {
-		Statement[] statements = compile(script);
-		for (Statement statement : statements) {
-			statement.execute(kb);
-		}
+		Statement statement = compile(script);
+		statement.execute(kb);
 	}
 
 	public String[] getConstants() {

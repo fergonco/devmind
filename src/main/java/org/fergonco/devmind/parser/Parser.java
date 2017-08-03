@@ -25,25 +25,25 @@ public class Parser {
 		this.currentToken = token;
 	}
 
-	public Statement[] parse() throws SyntaxException {
-		ArrayList<Statement> statements = new ArrayList<>();
+	public Statement parse() throws SyntaxException {
 		Expression leftSide = expression();
+		Statement ret = null;
 		if (accept(EqualsToken.class)) {
 			Expression rightSide = expression();
-			statements.add(new EqualityStatement(leftSide, rightSide));
+			ret = new EqualityStatement(leftSide, rightSide);
 		} else if (accept(ImplicationToken.class)) {
 			Expression rightSide = expression();
-			statements.add(new ImplicationStatement(leftSide, rightSide));
+			ret = new ImplicationStatement(leftSide, rightSide);
 		} else {
 			if (leftSide instanceof Constant) {
-				statements.add(new ConstantStatement(((Constant) leftSide).getId()));
+				ret = new ConstantStatement(((Constant) leftSide).getId());
 			} else if (leftSide instanceof Function) {
 				Function predicateCall = (Function) leftSide;
-				statements.add(new PredicateStatement(predicateCall));
+				ret = new PredicateStatement(predicateCall);
 			}
 		}
 
-		return statements.toArray(new Statement[statements.size()]);
+		return ret;
 	}
 
 	public Expression expression() throws SyntaxException {
