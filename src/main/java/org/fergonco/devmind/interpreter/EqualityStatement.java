@@ -2,15 +2,10 @@ package org.fergonco.devmind.interpreter;
 
 import org.fergonco.devmind.parser.Expression;
 
-public class EqualityStatement implements Statement {
-
-	private Expression leftSide;
-	private Expression rightSide;
+public class EqualityStatement extends AbstractTwoSideStatement implements Statement {
 
 	public EqualityStatement(Expression leftSide, Expression rightSide) {
-		super();
-		this.leftSide = leftSide;
-		this.rightSide = rightSide;
+		super(leftSide,rightSide);
 	}
 
 	@Override

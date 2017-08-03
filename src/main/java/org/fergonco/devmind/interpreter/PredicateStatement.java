@@ -2,19 +2,25 @@ package org.fergonco.devmind.interpreter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fergonco.devmind.parser.Expression;
+import org.fergonco.devmind.parser.Function;
 
 public class PredicateStatement implements Statement {
 
-	private String predicateName;
-	private Expression[] parameters;
+	private Function predicateCall;
 
-	public PredicateStatement(String predicateName, Expression... parameters) {
-		this.predicateName = predicateName;
-		this.parameters = parameters;
+	public PredicateStatement(Function predicateCall) {
+		this.predicateCall = predicateCall;
 	}
 
 	@Override
 	public String toString() {
-		return predicateName + "(" + StringUtils.join(parameters) + ")";
+		return predicateCall.getId() + "(" + StringUtils.join(predicateCall.getParameters()) + ")";
+	}
+
+	@Override
+	public void execute(KnowledgeBase kb) {
+		for (Expression parameter : predicateCall.getParameters()) {
+			kb.registerReferences(this, parameter);
+		}
 	}
 }

@@ -13,4 +13,9 @@ public class ConstantStatement implements Statement {
 		return constantValue; 
 	}
 
+	@Override
+	public void execute(KnowledgeBase kb) {
+		kb.constants.add(constantValue);
+	}
+
 }

@@ -39,7 +39,7 @@ public class Parser {
 				statements.add(new ConstantStatement(((Constant) leftSide).getId()));
 			} else if (leftSide instanceof Function) {
 				Function predicateCall = (Function) leftSide;
-				statements.add(new PredicateStatement(predicateCall.getId(), predicateCall.getParameters()));
+				statements.add(new PredicateStatement(predicateCall));
 			}
 		}
 

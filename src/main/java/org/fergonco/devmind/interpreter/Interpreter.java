@@ -8,6 +8,8 @@ import org.fergonco.devmind.parser.SyntaxException;
 
 public class Interpreter {
 
+	private KnowledgeBase kb = new KnowledgeBase();
+
 	public Statement[] compile(String script) throws SyntaxException, LexerException {
 		Lexer lexer = new Lexer(script);
 		Token token = lexer.process();
@@ -15,5 +17,18 @@ public class Interpreter {
 		return parser.parse();
 	}
 
+	public void tell(String script) throws SyntaxException, LexerException {
+		Statement[] statements = compile(script);
+		for (Statement statement : statements) {
+			statement.execute(kb);
+		}
+	}
 
+	public String[] askConstants() {
+		return kb.askConstants();
+	}
+
+	public Statement[] askReferences(String constantName) {
+		return kb.askReferences(constantName);
+	}
 }

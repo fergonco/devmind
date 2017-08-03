@@ -32,13 +32,14 @@ public class ParserTest extends TestCase {
 
 	@Test
 	public void testPredicate() throws SyntaxException, LexerException {
-		check("nice(Project)", new PredicateStatement("nice", new Constant("Project")));
+		check("nice(Project)", new PredicateStatement(new Function("nice", new Constant("Project"))));
 	}
 
 	@Test
 	public void testPredicateParameters() throws SyntaxException, LexerException {
-		check("nice(ui(Project))", new PredicateStatement("nice", new Function("ui", new Constant("Project"))));
-		check("nice(\"holidays\")", new PredicateStatement("nice", new Literal("holidays")));
+		check("nice(ui(Project))",
+				new PredicateStatement(new Function("nice", new Function("ui", new Constant("Project")))));
+		check("nice(\"holidays\")", new PredicateStatement(new Function("nice", new Literal("holidays"))));
 	}
 
 	@Test

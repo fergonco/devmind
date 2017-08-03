@@ -2,19 +2,14 @@ package org.fergonco.devmind.interpreter;
 
 import org.fergonco.devmind.parser.Expression;
 
-public class ImplicationStatement implements Statement {
-
-	private Expression leftSide;
-	private Expression rightSide;
-
+public class ImplicationStatement extends AbstractTwoSideStatement implements Statement {
 	public ImplicationStatement(Expression leftSide, Expression rightSide) {
-		super();
-		this.leftSide = leftSide;
-		this.rightSide = rightSide;
+		super(leftSide, rightSide);
 	}
 
 	@Override
 	public String toString() {
 		return leftSide + "->" + rightSide;
 	}
+
 }
