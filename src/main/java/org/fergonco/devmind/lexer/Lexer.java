@@ -5,21 +5,23 @@ import java.util.ArrayList;
 public class Lexer {
 
 	private String script;
+	private char[] chars;
 	private int position;
 	private ArrayList<Token> ret = new ArrayList<>();
 
 	public Lexer(String script) {
 		this.script = script;
+		this.chars = script.toCharArray();
 	}
 
 	public Token process() throws LexerException {
 		position = 0;
-		char[] chars = script.toCharArray();
 		while (position < chars.length) {
 			char character = chars[position];
-			if (matches(chars, position, "what")) {
-				position += 4;
+			if (consume("what")) {
 				ret.add(new WhatToken());
+			} else if (consume("show")) {
+				ret.add(new ShowToken());
 			} else if (Character.isLetter(character)) {
 				int start = position;
 				while (position < chars.length && Character.isLetterOrDigit(chars[position])) {
@@ -62,15 +64,16 @@ public class Lexer {
 		return ret.get(0);
 	}
 
-	private boolean matches(char[] chars, int pos, String str) {
-		if (chars.length < pos + str.length()) {
+	private boolean consume(String str) {
+		if (chars.length < position + str.length()) {
 			return false;
 		}
 		for (int i = 0; i < str.length(); i++) {
-			if (chars[pos + i] != str.charAt(i)) {
+			if (chars[position + i] != str.charAt(i)) {
 				return false;
 			}
 		}
+		position += str.length() - 1;
 		return true;
 	}
 

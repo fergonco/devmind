@@ -14,7 +14,7 @@ public class PredicateStatement extends AbstractTellStatement implements Stateme
 
 	@Override
 	public String toString() {
-		return predicateCall.getId() + "(" + StringUtils.join(predicateCall.getParameters()) + ")";
+		return predicateCall.getId() + "(" + StringUtils.join(predicateCall.getParameters(), ",") + ")";
 	}
 
 	@Override

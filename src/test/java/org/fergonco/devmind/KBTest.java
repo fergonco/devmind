@@ -56,6 +56,19 @@ public class KBTest {
 		assertTrue(output.contains("A"));
 	}
 
+	@Test
+	public void runAskRefs() throws SyntaxException, LexerException {
+		Interpreter i = new Interpreter();
+		i.run("A");
+		i.run("nice(B)");
+		i.run("parent(C) = A");
+		i.run("uses(ui(A), B)");
+		String output = i.run("show A");
+		assertTrue(output.contains("parent(C)=A"));
+		assertTrue(output.contains("uses(ui(A),B)"));
+		assertTrue(!output.contains("nice(B)"));
+	}
+
 	private boolean contains(Object[] array, Object element) {
 		for (Object test : array) {
 			if (test.toString().equals(element.toString())) {

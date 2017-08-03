@@ -6,6 +6,7 @@ import org.fergonco.devmind.interpreter.ConstantStatement;
 import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.ImplicationStatement;
 import org.fergonco.devmind.interpreter.PredicateStatement;
+import org.fergonco.devmind.interpreter.ShowStatement;
 import org.fergonco.devmind.interpreter.Statement;
 import org.fergonco.devmind.interpreter.WhatStatement;
 import org.fergonco.devmind.lexer.ClosedParenthesisToken;
@@ -14,6 +15,7 @@ import org.fergonco.devmind.lexer.EqualsToken;
 import org.fergonco.devmind.lexer.IDToken;
 import org.fergonco.devmind.lexer.ImplicationToken;
 import org.fergonco.devmind.lexer.OpenParenthesisToken;
+import org.fergonco.devmind.lexer.ShowToken;
 import org.fergonco.devmind.lexer.SingleValueToken;
 import org.fergonco.devmind.lexer.Token;
 import org.fergonco.devmind.lexer.WhatToken;
@@ -31,6 +33,9 @@ public class Parser {
 		Statement ret = null;
 		if (accept(WhatToken.class)) {
 			ret = new WhatStatement();
+		} else if (accept(ShowToken.class))	{
+			String id = expect(IDToken.class).getText();
+			ret = new ShowStatement(id);
 		} else {
 			Expression leftSide = expression();
 			if (accept(EqualsToken.class)) {
