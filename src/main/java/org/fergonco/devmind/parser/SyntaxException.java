@@ -1,4 +1,4 @@
-package org.fergonco.devmind;
+package org.fergonco.devmind.parser;
 
 public class SyntaxException extends Exception {
 	private static final long serialVersionUID = 1L;

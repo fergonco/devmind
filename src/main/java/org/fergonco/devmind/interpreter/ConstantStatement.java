@@ -1,4 +1,4 @@
-package org.fergonco.devmind;
+package org.fergonco.devmind.interpreter;
 
 public class ConstantStatement implements Statement {
 
@@ -12,4 +12,5 @@ public class ConstantStatement implements Statement {
 	public String toString() {
 		return constantValue; 
 	}
+
 }

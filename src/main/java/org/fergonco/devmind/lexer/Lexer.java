@@ -1,10 +1,6 @@
 package org.fergonco.devmind.lexer;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.fergonco.devmind.SyntaxException;
 
 public class Lexer {
 
@@ -21,7 +17,7 @@ public class Lexer {
 		this.script = script;
 	}
 
-	public Token process() throws SyntaxException {
+	public Token process() throws LexerException {
 		position = 0;
 		char[] chars = script.toCharArray();
 		while (position < chars.length) {
@@ -55,12 +51,12 @@ public class Lexer {
 					ret.add(IMPLICATION);
 					position++;// move to last position of token
 				} else {
-					throw new SyntaxException("- must be followed by >");
+					throw new LexerException("- must be followed by >");
 				}
 			} else if (Character.isWhitespace(character)) {
 				// noop
 			} else {
-				throw new SyntaxException("Invalid character: " + character);
+				throw new LexerException("Invalid character: " + character);
 			}
 			position++;
 		}
