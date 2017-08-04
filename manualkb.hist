@@ -25,7 +25,7 @@ uses(Parser, Lexer)
 
 input(Interpreter, Statements)
 uses(Interpreter, Parser)
-package(Interpreter, org.fergonco.devmind)
+package(Interpreter, org.fergonco.devmind.interpreter)
 
 Api = api(Interpreter)
 Script = "A string containing just one sentence. No multiple statements allowed. No empty strings or single carriage returns (white lines) allowed"
