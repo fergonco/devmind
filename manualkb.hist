@@ -1,0 +1,68 @@
+Project
+targetuser(Project) = "Developers that are familiar with command line"
+architecture(Project) = layered
+complexity(Project) = minimum
+UI = ui(Project)
+complexity(UI) = minimum
+
+Lexer
+Parser
+Interpreter
+layers(Project, Lexer)
+layers(Project, Parser)
+layers(Project, Interpreter)
+
+Tokens
+output(Lexer, Tokens)
+package(Lexer, org.fergonco.devmind.lexer)
+
+Statements
+input(Parser, Tokens)
+uses(Parser, Lexer)
+output(Parser, Statements)
+package(Parser, org.fergonco.devmind.parser)
+uses(Parser, Lexer)
+
+input(Interpreter, Statements)
+uses(Interpreter, Parser)
+package(Interpreter, org.fergonco.devmind)
+
+Api = api(Interpreter)
+Script = "A string containing just one sentence. No multiple statements allowed. No empty strings or single carriage returns (white lines) allowed"
+"For being simpler to implement" -> input(Api, Script)
+
+TellStatements
+AskStatements
+types(Statements, TellStatements)
+types(Statements, AskStatements)
+description(TellStatements) = "update knowledge base"
+description(AskStatements) = "query knowledge base"
+
+Grammar
+Constants
+Predicates
+Equalities
+Implications
+Comments
+parts(Grammar) = Constants
+parts(Grammar) = Predicates
+parts(Grammar) = Equalities
+parts(Grammar) = Implications
+parts(Grammar) = Comments
+"We may want to write down things even if devmind does not understand them yet" -> weneed(Comments)
+"We want to keep the user from using the same word for two different concepts in big knowledge bases" -> weneed(Constants)
+"We want to keep the user from creating two different concepts due to typos" -> weneed(Constants)
+FunctionDefs="Statements like f(x)=y"
+VariableDefs="Statements like x=expr"
+are(FunctionDefs, Equalities)
+are(VariableDefs, Equalities)
+"We want to describe aspects of an object" -> weneed(FunctionDefs)
+"We want to name results of a function and use them later" -> weneed(VariableDefs)
+"It is simpler to implement to allow general equalities at the parser level and restrict at the interpreter level" -> weneed(Equalities)
+#forall Constants C: definesNewConstant(C)
+#forall Equalities E: begin
+#	parts(E) = leftSide
+#	parts(E) = rightSide
+#	isConstantExpression(leftSide) AND constantNotDefined(leftSide) -> definesNewConstant(E)
+#	isConstantExpression(rightSide) AND constantNotDefined(rightSide) -> definesNewConstant(E)
+#end
