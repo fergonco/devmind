@@ -43,10 +43,13 @@ Constants
 Predicates
 Equalities
 Implications
+Comments
 parts(Grammar) = Constants
 parts(Grammar) = Predicates
 parts(Grammar) = Equalities
 parts(Grammar) = Implications
+parts(Grammar) = Comments
+"We may want to write down things even if devmind does not understand them yet" -> weneed(Comments)
 "We want to keep the user from using the same word for two different concepts in big knowledge bases" -> weneed(Constants)
 "We want to keep the user from creating two different concepts due to typos" -> weneed(Constants)
 FunctionDefs="Statements like f(x)=y"
@@ -56,10 +59,10 @@ are(VariableDefs, Equalities)
 "We want to describe aspects of an object" -> weneed(FunctionDefs)
 "We want to name results of a function and use them later" -> weneed(VariableDefs)
 "It is simpler to implement to allow general equalities at the parser level and restrict at the interpreter level" -> weneed(Equalities)
-forall Constants C: definesNewConstant(C)
-forall Equalities E: begin
-	parts(E) = leftSide
-	parts(E) = rightSide
-	isConstantExpression(leftSide) AND constantNotDefined(leftSide) -> definesNewConstant(E)
-	isConstantExpression(rightSide) AND constantNotDefined(rightSide) -> definesNewConstant(E)
-end
+#forall Constants C: definesNewConstant(C)
+#forall Equalities E: begin
+#	parts(E) = leftSide
+#	parts(E) = rightSide
+#	isConstantExpression(leftSide) AND constantNotDefined(leftSide) -> definesNewConstant(E)
+#	isConstantExpression(rightSide) AND constantNotDefined(rightSide) -> definesNewConstant(E)
+#end
