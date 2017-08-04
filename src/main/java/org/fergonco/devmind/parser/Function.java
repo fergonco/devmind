@@ -22,7 +22,7 @@ public class Function implements Expression {
 
 	@Override
 	public String toString() {
-		return id + "(" + StringUtils.join(parameters) + ")";
+		return id + "(" + StringUtils.join(parameters, ",") + ")";
 	}
 
 	public boolean same(Expression obj) {

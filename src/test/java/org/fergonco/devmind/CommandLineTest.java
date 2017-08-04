@@ -3,6 +3,7 @@ package org.fergonco.devmind;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.fergonco.devmind.interpreter.ConstantNotFoundException;
@@ -19,6 +20,7 @@ public class CommandLineTest {
 	@Before
 	@After
 	public void clean() {
+		Interpreter.HISTORY = new File("target/kb.hist");
 		assertTrue(!Interpreter.HISTORY.exists() || Interpreter.HISTORY.delete());
 	}
 

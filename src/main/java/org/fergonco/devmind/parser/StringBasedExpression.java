@@ -9,11 +9,6 @@ public abstract class StringBasedExpression implements Expression {
 	}
 
 	@Override
-	public String toString() {
-		return value;
-	}
-
-	@Override
 	public boolean same(Expression obj) {
 		if (obj.getClass().equals(this.getClass())) {
 			return ((StringBasedExpression) obj).value.equals(this.value);

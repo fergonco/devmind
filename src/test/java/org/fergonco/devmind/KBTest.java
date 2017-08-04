@@ -3,6 +3,8 @@ package org.fergonco.devmind;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.Interpreter;
 import org.fergonco.devmind.interpreter.KBRuntimeException;
@@ -102,6 +104,16 @@ public class KBTest {
 		contains(symbols, "parent");
 		contains(symbols, "uses");
 		contains(symbols, "ui");
+	}
+
+	@Test
+	public void loadSelfKB() throws SyntaxException, LexerException, KBRuntimeException, IOException {
+		Interpreter i = new Interpreter();
+		String output = i.commmandLineRun("what");
+		assertTrue(output.contains("Project"));
+		i = new Interpreter();
+		String output2 = i.commmandLineRun("what");
+		assertEquals(output, output2);
 	}
 
 	private boolean contains(Object[] array, Object element) {

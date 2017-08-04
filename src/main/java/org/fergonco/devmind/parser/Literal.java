@@ -7,6 +7,11 @@ public class Literal extends StringBasedExpression implements Expression {
 	}
 
 	@Override
+	public String toString() {
+		return "\"" + value + "\"";
+	}
+
+	@Override
 	public void accept(TerminalVisitor terminalVisitor) {
 		terminalVisitor.visit(this);
 	}

@@ -6,6 +6,11 @@ public class Constant extends StringBasedExpression implements Expression {
 		super(value);
 	}
 
+	@Override
+	public String toString() {
+		return value;
+	}
+
 	public String getId() {
 		return value;
 	}
