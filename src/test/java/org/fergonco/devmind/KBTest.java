@@ -5,6 +5,7 @@ import static junit.framework.Assert.assertTrue;
 
 import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.Interpreter;
+import org.fergonco.devmind.interpreter.KBRuntimeException;
 import org.fergonco.devmind.interpreter.PredicateStatement;
 import org.fergonco.devmind.interpreter.Statement;
 import org.fergonco.devmind.lexer.LexerException;
@@ -16,7 +17,7 @@ import org.junit.Test;
 public class KBTest {
 
 	@Test
-	public void constants() throws SyntaxException, LexerException {
+	public void constants() throws SyntaxException, LexerException, KBRuntimeException {
 		Interpreter i = new Interpreter();
 		i.run("P");
 		i.run("A");
@@ -28,10 +29,11 @@ public class KBTest {
 	}
 
 	@Test
-	public void constantReferences() throws SyntaxException, LexerException {
+	public void constantReferences() throws SyntaxException, LexerException, KBRuntimeException {
 		Interpreter i = new Interpreter();
-		i.run("P");
 		i.run("A");
+		i.run("B");
+		i.run("C");
 		i.run("cool(A)");
 		i.run("nice(B)");
 		i.run("parent(C) = A");
@@ -49,7 +51,7 @@ public class KBTest {
 	}
 
 	@Test
-	public void runAskWhat() throws SyntaxException, LexerException {
+	public void runAskWhat() throws SyntaxException, LexerException, KBRuntimeException {
 		Interpreter i = new Interpreter();
 		i.run("A");
 		String output = i.run("what");
@@ -57,9 +59,11 @@ public class KBTest {
 	}
 
 	@Test
-	public void runAskRefs() throws SyntaxException, LexerException {
+	public void runAskRefs() throws SyntaxException, LexerException, KBRuntimeException {
 		Interpreter i = new Interpreter();
 		i.run("A");
+		i.run("B");
+		i.run("C");
 		i.run("nice(B)");
 		i.run("parent(C) = A");
 		i.run("uses(ui(A), B)");
@@ -67,6 +71,27 @@ public class KBTest {
 		assertTrue(output.contains("parent(C)=A"));
 		assertTrue(output.contains("uses(ui(A),B)"));
 		assertTrue(!output.contains("nice(B)"));
+	}
+
+	@Test
+	public void getAllSymbols() throws SyntaxException, LexerException, KBRuntimeException {
+		Interpreter i = new Interpreter();
+		i.run("A");
+		i.run("B");
+		i.run("C");
+		i.run("nice(B)");
+		i.run("nice(C)");
+		i.run("parent(C) = A");
+		i.run("uses(ui(A), B)");
+		String[] symbols = i.getSymbols();
+		assertEquals(7, symbols.length);
+		contains(symbols, "A");
+		contains(symbols, "B");
+		contains(symbols, "C");
+		contains(symbols, "nice");
+		contains(symbols, "parent");
+		contains(symbols, "uses");
+		contains(symbols, "ui");
 	}
 
 	private boolean contains(Object[] array, Object element) {

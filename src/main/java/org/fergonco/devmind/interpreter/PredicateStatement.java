@@ -18,10 +18,15 @@ public class PredicateStatement extends AbstractTellStatement implements Stateme
 	}
 
 	@Override
-	public void execute(KnowledgeBase kb) {
+	public void execute(KnowledgeBase kb) throws KBRuntimeException {
 		for (Expression parameter : predicateCall.getParameters()) {
 			kb.registerReferences(this, parameter);
 		}
+	}
+
+	@Override
+	public Expression[] getExpressions() {
+		return new Expression[] { predicateCall };
 	}
 
 }

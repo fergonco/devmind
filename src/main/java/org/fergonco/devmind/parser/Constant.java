@@ -10,4 +10,8 @@ public class Constant extends StringBasedExpression implements Expression {
 		return value;
 	}
 
+	@Override
+	public void accept(TerminalVisitor terminalVisitor) {
+		terminalVisitor.visit(this);
+	}
 }

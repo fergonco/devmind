@@ -19,7 +19,7 @@ public class ParserTest extends TestCase {
 
 	@Test
 	public void testConstant() throws SyntaxException, LexerException {
-		check("Project", new ConstantStatement("Project"));
+		check("Project", new ConstantStatement(new Constant("Project")));
 	}
 
 	private void check(String script, Statement statement) throws SyntaxException, LexerException {

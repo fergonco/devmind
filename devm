@@ -1,0 +1,31 @@
+_devm()
+{
+	local cur prev opts base
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    #
+    #  Complete the arguments to some of the basic commands.
+    #
+    case "${prev}" in
+        devm)
+        	COMPREPLY=( $(compgen -W "what show" -- ${cur}) )
+            return 0
+            ;;
+        show)
+            local constants=$(devm what)
+            COMPREPLY=( $(compgen -W "${constants}" -- ${cur}) )
+            return 0
+            ;;
+        *)
+        ;;
+    esac
+
+   opts=$(devm --symbols)
+   COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+   return 0
+
+}
+
+complete -F _devm devm

@@ -6,4 +6,9 @@ public class Literal extends StringBasedExpression implements Expression {
 		super(value);
 	}
 
+	@Override
+	public void accept(TerminalVisitor terminalVisitor) {
+		terminalVisitor.visit(this);
+	}
+
 }

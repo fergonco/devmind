@@ -46,7 +46,7 @@ public class Parser {
 				ret = new ImplicationStatement(leftSide, rightSide);
 			} else {
 				if (leftSide instanceof Constant) {
-					ret = new ConstantStatement(((Constant) leftSide).getId());
+					ret = new ConstantStatement((Constant) leftSide);
 				} else if (leftSide instanceof Function) {
 					Function predicateCall = (Function) leftSide;
 					ret = new PredicateStatement(predicateCall);

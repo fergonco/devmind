@@ -40,4 +40,12 @@ public class Function implements Expression {
 		return false;
 	}
 
+	@Override
+	public void accept(TerminalVisitor terminalVisitor) {
+		terminalVisitor.visit(this);
+		for (Expression expression : parameters) {
+			expression.accept(terminalVisitor);
+		}
+	}
+
 }
