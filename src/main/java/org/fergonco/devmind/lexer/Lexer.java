@@ -22,9 +22,10 @@ public class Lexer {
 				ret.add(new WhatToken());
 			} else if (consume("show")) {
 				ret.add(new ShowToken());
-			} else if (Character.isLetter(character)) {
+			} else if (Character.isLetter(character) || character == '.') {
 				int start = position;
-				while (position < chars.length && Character.isLetterOrDigit(chars[position])) {
+				while (position < chars.length
+						&& (Character.isLetterOrDigit(chars[position]) || chars[position] == '.')) {
 					position++;
 				}
 				int end = position;
