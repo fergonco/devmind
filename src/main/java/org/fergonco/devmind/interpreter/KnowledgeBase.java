@@ -120,4 +120,8 @@ public class KnowledgeBase {
 		});
 		return ret;
 	}
+
+	public boolean askConstant(String constantName) {
+		return constants.contains(constantName);
+	}
 }
