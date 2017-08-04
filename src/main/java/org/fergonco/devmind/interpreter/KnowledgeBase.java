@@ -68,7 +68,11 @@ public class KnowledgeBase {
 
 	public Statement[] getReferences(String constantName) {
 		ArrayList<Statement> ret = constantStatements.get(constantName);
-		return ret.toArray(new Statement[ret.size()]);
+		if (ret == null) {
+			return new Statement[0];
+		} else {
+			return ret.toArray(new Statement[ret.size()]);
+		}
 	}
 
 	public String[] getSymbols() {

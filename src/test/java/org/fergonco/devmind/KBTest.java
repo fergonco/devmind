@@ -59,7 +59,7 @@ public class KBTest {
 	}
 
 	@Test
-	public void runAskRefs() throws SyntaxException, LexerException, KBRuntimeException {
+	public void runShow() throws SyntaxException, LexerException, KBRuntimeException {
 		Interpreter i = new Interpreter();
 		i.run("A");
 		i.run("B");
@@ -71,6 +71,16 @@ public class KBTest {
 		assertTrue(output.contains("parent(C)=A"));
 		assertTrue(output.contains("uses(ui(A),B)"));
 		assertTrue(!output.contains("nice(B)"));
+	}
+
+	@Test
+	public void runShowNoRefs() throws SyntaxException, LexerException, KBRuntimeException {
+		Interpreter i = new Interpreter();
+		i.run("A");
+		i.run("B");
+		i.run("nice(B)");
+		String output = i.run("show A");
+		assertEquals("", output.trim());
 	}
 
 	@Test
