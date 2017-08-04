@@ -2,6 +2,7 @@ package org.fergonco.devmind.parser;
 
 import java.util.ArrayList;
 
+import org.fergonco.devmind.interpreter.CommentStatement;
 import org.fergonco.devmind.interpreter.ConstantStatement;
 import org.fergonco.devmind.interpreter.EqualityStatement;
 import org.fergonco.devmind.interpreter.ImplicationStatement;
@@ -11,6 +12,7 @@ import org.fergonco.devmind.interpreter.Statement;
 import org.fergonco.devmind.interpreter.WhatStatement;
 import org.fergonco.devmind.lexer.ClosedParenthesisToken;
 import org.fergonco.devmind.lexer.ComaToken;
+import org.fergonco.devmind.lexer.CommentToken;
 import org.fergonco.devmind.lexer.EqualsToken;
 import org.fergonco.devmind.lexer.IDToken;
 import org.fergonco.devmind.lexer.ImplicationToken;
@@ -33,9 +35,11 @@ public class Parser {
 		Statement ret = null;
 		if (accept(WhatToken.class)) {
 			ret = new WhatStatement();
-		} else if (accept(ShowToken.class))	{
+		} else if (accept(ShowToken.class)) {
 			String id = expect(IDToken.class).getText();
 			ret = new ShowStatement(id);
+		} else if (accept(CommentToken.class)) {
+			ret = new CommentStatement(lastConsumed.getText());
 		} else {
 			Expression leftSide = expression();
 			if (accept(EqualsToken.class)) {

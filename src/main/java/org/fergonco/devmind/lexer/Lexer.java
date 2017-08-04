@@ -56,6 +56,9 @@ public class Lexer {
 				}
 			} else if (Character.isWhitespace(character)) {
 				// noop
+			} else if (character == '#') {
+				ret.add(new CommentToken(script));
+				position = chars.length - 1;
 			} else {
 				throw new LexerException("Invalid character: " + character);
 			}
