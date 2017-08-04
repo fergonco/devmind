@@ -17,7 +17,7 @@ import org.fergonco.devmind.parser.SyntaxException;
 
 public class Interpreter {
 
-	public static final File HISTORY = new File("kb.hist");
+	public static File HISTORY = new File("kb.hist");
 	private KnowledgeBase kb = new KnowledgeBase();
 	private ArrayList<String> statements = new ArrayList<>();
 
@@ -101,6 +101,9 @@ public class Interpreter {
 			try {
 				String line;
 				while ((line = reader.readLine()) != null) {
+					if (line.trim().length() == 0) {
+						continue;
+					}
 					run(line);
 				}
 			} finally {
